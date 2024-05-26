@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+        <h2>Welcome to Bookish Haven: Your Digital Library Oasis</h2>
+        <br>
+        <div class="card-group">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">About Us</h5>
+                <p class="card-text">We at Bookish Haven are proponents of literature's transformational power. Our platform is intended to serve as your virtual haven 
+                    a location where readers of all ages and interests may retreat.</p>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Our Story</h5>
+                <p class="card-text">A group of book lovers launched Bookish Haven in 2024 as a side project with the goal of building a digital library that would fundamentally alter how people find and interact with books. </p>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Log In Priorities</h5>
+                <p class="card-text">
+                    By requiring individuals to create user accounts for borrowing or reserving books, 
+                    we aim to create a more efficient, personalized, and secure library experience that maximizes the benefits for both users and the library alike.
+                </p>
+                <a href="/user/signup/" class="card-link">Register New Book Account</a>
+                {% if user.is_authenticated %}
+                {% else %}
+                <a href="/user/login/" class="card-link">Log In</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <br>
+          <br>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Statistics</h5>
+              <p class="card-text">
+                  Discover which books are capturing the attention of readers with our top 10 most popular books report.
+                  Track the checkout frequency of each book over the past year, giving you a clear picture of reader preferences and trends.
+                  Stay on top of overdue books with our top 100 overdue books report.
+              </p>
+              <a href="/popularbooks/" class="card-link">Top 10 Most Popular Books</a>
+              <a href="/latebooks/" class="card-link">Books Returned Most Late</a>
+            </div>
+          </div>
+          <br>
+          <div class="card-group">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Books Menagement</h5>
+                <p class="card-text">Our platform boasts an extensive collection of over 1000 books spanning various genres, ensuring that there's something for every reader's taste and interest.
+                    Whether you're into fiction, non-fiction, romance, mystery, or sci-fi, you'll find a treasure trove of books waiting to be discovered.  See All The Books in Our Library</p>
+                    <a href="/books/" class="card-link">See More</a>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Detailed Information</h5>
+                <p class="card-text">Dive deep into each book's details, with comprehensive information provided for every title in our library.
+                    Learn about the author, explore the book's genre, and get insights into its publication history, ensuring that you're well-informed before making your selection. </p>
+                <a href="/search/" class="card-link">Search For a Spacific Book</a>
+            </div>
+            </div>
+            
+          </div>
+          <br>
+          <br>
+    {% endblock %}
+</body>
+</html>
+

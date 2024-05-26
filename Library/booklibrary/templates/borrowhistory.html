@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <a href="/books/"><button type="button" class="btn btn-light">Return To The Book List Page</button></a>
+    <br>
+    <br>
+    <div style="display:flex;">
+        <div class="card text-white bg-dark mb-3" style="max-width: 600px; margin-right: 30px;">
+            <div class="card-header">{{ book.title }}</div>
+            <div class="card-body">
+            <p class="card-text">Author: {{ book.author.full_name }}</p>
+            <p class="card-text">Category: {% for category in book.category.all %}{{ category }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+            <p class="card-text">Publication Date: {{ book.publication_date }}</p>
+            <p class="card-text">In Stock: {{ book.stock }}</p>
+            </div>
+        </div>
+        <div class="card text-white bg-dark mb-3" style="max-width: 600px;">
+            <div class="card-header">Detail Borrow Information</div>
+            <div class="card-body">
+            <p class="card-text">Total Borrows: {{ borrow_count }}</p>
+            <p class="card-text">Now Avaliable: {{ book.stock }}</p>
+            <p class="card-text">Right Now Borrowed: {{ not_returned_count }}</p>
+            </div>
+        </div>
+    </div>
+        {% for borrow in borrows %}
+        <div class="card">
+            <div class="card-header">
+              Borrow History
+            </div>
+            <div class="card-body">
+              
+              <p class="card-text"><strong>Borrowed By:</strong> {{ borrow.user.username }}</p>
+              <p class="card-text"><strong>Borrow Date:</strong> {{ borrow.borrowed_at }}</p>
+              {% if borrow.returned_at %}
+                <p><strong>Returned Date:</strong> {{ borrow.returned_at }}</p>
+              {% else %}
+                <p><strong>Status:</strong> Not Returned Yet</p>
+              {% endif %}
+            </div>
+          </div>
+          <br>
+        {% endfor %}
+    {% endblock %}
+</body>
+</html>

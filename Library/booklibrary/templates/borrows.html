@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+        {% for borrow in borrows %}
+            {% if borrow.returned_at %}
+            {% else %}
+                <div class="card border-dark mb-3" >
+                    <div class="card-header">{{ borrow.user.username }}</div>
+                    <div class="card-body text-dark">
+                    <p class="card-text">{{ borrow.book }}</p>
+                    <p class="card-text">{{ borrow.borrowed_at }}</p>
+                    <a href="{% url 'return_book' borrow.id %}"><button type="button" class="btn btn-dark">Register Returned Book With Returne Date Of Today</button></a>
+                    <a href="{% url 'admin:booklibrary_borrow_change' borrow.id %}"><button type="button" class="btn btn-dark">Register Returned Book With Different Date</button></a>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endblock %}
+     
+</body>
+</html>

@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <div class="container mt-4">
+        <h2>Book List</h2>
+        <a href="{% url 'most_popular_books' %}"><button type="button" class="btn btn-light">Top 10 Most Popular Books</button></a>
+        <a href="{% url 'most_late_books' %}"><button type="button" class="btn btn-light">Top 100 Most Late Returned Books</button></a>
+        <a href="{% url 'in_demand' %}"><button type="button" class="btn btn-light">Sort: Most demanded books</button></a>
+        <br>
+        <br>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Author</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td><a href="{% url 'book_detail' book.id %}">{{ book.title }}</a></td>
+                        <td>{{ book.author.full_name }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="?page=1">First Page</a></li>
+          {% if books.has_previous %}
+          <li class="page-item"><a class="page-link" href="?page={{ books.previous_page_number }}">Back</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ books.previous_page_number }}">{{ books.previous_page_number }}</a></li>
+          {% endif %}
+          <li class="page-item"><a class="page-link" href="#">{{ books.number }}</a></li>
+          {% if books.has_next %}
+          <li class="page-item"><a class="page-link" href="?page={{ books.next_page_number }}">{{ books.next_page_number }}</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ books.next_page_number }}">Next</a></li>
+          <li class="page-item"><a class="page-link" href="?page={{ books.paginator.num_pages }}">Last Page</a></li>
+          {% endif %}
+          
+        </ul>
+      </nav>
+    {% endblock %}
+</body>
+</html>

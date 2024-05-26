@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+        <h3>Hello {{ profile.user.username }}!</h3>
+        <br>
+        {% if user.is_staff %}
+        <div class="row">
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Add New Book</h5>
+                  <p class="card-text">With this link, you can register new book in our library</p>
+                  <a href="/create/" class="btn btn-primary">Add Book</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">Register Return</h5>
+                  <p class="card-text">With this link, you see and register returned books</p>
+                  <a href="/borrows/" class="btn btn-primary">See Borrowed Books</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="col-sm-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Late Users Stats</h5>
+                <p class="card-text">With this link, you see late users and their information</p>
+                <a href="/lateusers/" class="btn btn-primary">See Late Users</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <div class="card">
+            <div class="card-header">
+            Reserved Books:
+            </div>
+            <div class="card-body">
+            <p class="card-text">
+                <ul>
+                    {% for reservation in reservations %}
+                    <li>{{ reservation.book.title }}</li>
+                    <br>
+                    {% empty %}
+                    <li>No reserved books.</li>
+                    {% endfor %}
+                </ul></p>
+            </div>
+        </div>
+        <br>
+        <div class="card">
+            <div class="card-header">
+            Borrowed Books:
+            </div>
+            <div class="card-body">
+            <p class="card-text">
+                <ul>
+                    {% for borrow in borrowed %}
+                        <li>{{ borrow.book.title }}</li>
+                        <p>Borrow Date: {{ borrow.borrowed_at }}</p>
+                        {% empty %}
+                        <li>No borrowed books.</li>
+                    {% endfor %}
+                </ul></p>
+            </div>
+        </div>
+        <br>
+        <div class="card">
+          <div class="card-header">
+          Waiting For Notification:
+          </div>
+          <div class="card-body">
+          <p class="card-text">
+              <ul>
+                  {% for book in books %}
+                      <li>{{ book.title }}</li>
+                      {% empty %}
+                      <li>Not waiting for a notification.</li>
+                  {% endfor %}
+              </ul></p>
+          </div>
+      </div>
+      <br>
+        {% endif %}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <div class="card text-center">
+        <div class="card-header">
+            Author Name: {{ book.author.full_name }}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Book Title: {{ book.title }}</h5>
+          <p class="card-text">Book Categories: {% for category in book.category.all %} {{ category }} {% endfor %}</p>
+          <p class="card-text">Publication Date: {{ book.publication_date }}</p>
+          <p class="card-text">Number of times This Book has been borrowed for last year: {{ borrow_stats }}</p>
+          {% if user.is_staff %}
+            <a href="{% url 'update' book.id %}" class="btn btn-success">Update</a>
+            <a href="{% url 'delete' book.id %}" class="btn btn-success">Delete</a> 
+            <br>
+            <br>
+            <h5>Number of Times This Book was Borrowed: {{ borrow_count }}</h5>
+            <a href="{% url 'borrow_history' book.id %}">See The Book Borrow History</a>
+          {% else %}
+            {% if user.is_authenticated %}
+                {% if book.stock > 0 %}
+                  <a href="{% url 'reservation' book.id %}" class="btn btn-success">Reserve</a>
+                  <a href="{% url 'borrow_book' book.id %}" class="btn btn-success">Borrow</a>
+                {% else %}
+                  <a href="{% url 'notify' book.id %}" class="btn btn-secondary">Notify Me</a>
+                {% endif %}
+              {% endif %}
+          {% endif %}
+        </div>
+        <div class="card-footer text-muted">
+            In Stock: {{ book.stock  }}
+        </div>
+      </div>
+    {% endblock %}
+</body>
+</html>

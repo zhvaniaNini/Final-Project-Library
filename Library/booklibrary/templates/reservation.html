@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% block content %}
+    <div class="card text-center">
+        <div class="card-header">
+            Author Name: {{ book.author.full_name }}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">You successfully Reserved a Book: {{ book.title }}</h5>
+          <p class="card-text">Book Categories: {% for category in book.category.all %}{{ category }}{% endfor %}</p>
+          <p>You Have One Day To Borrow Book or else Reservation Will be Removed. </p>
+          <p>Thanks For Your Service!</p>
+          <a href="/books/" class="btn btn-success">Back to Book List</a>
+        </div>
+        <div class="card-footer text-muted">
+            In Stock: {{ book.stock  }}
+        </div>
+      </div>
+    {% endblock %}
+</body>
+</html>
