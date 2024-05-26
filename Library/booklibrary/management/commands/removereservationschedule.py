@@ -11,7 +11,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         
         def remove_reservation():
-            threshold_time = datetime.now() - timedelta(minutes=1) 
+            threshold_time = datetime.now() - timedelta(days=1) 
             expired_reservations = Reservation.objects.filter(reserved_at__lt=threshold_time)
 
             for reservation in expired_reservations:
